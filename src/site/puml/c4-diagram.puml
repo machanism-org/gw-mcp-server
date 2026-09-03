@@ -1,0 +1,40 @@
+' @guidance:
+' Create or update the C4 Component-level PlantUML diagram for the project.
+'
+' - If a C4 Component diagram already exists.
+' - If no diagram exists, generate a new one that clearly represents all major components, their responsibilities, and interactions within the project.
+' - Use PlantUML C4-PlantUML syntax and best practices for clarity and maintainability.
+' - Include only relevant components from `/src/main/java` and external systems; remove or omit unnecessary details.
+' - Organize the diagram for readability, avoiding complexity and clutter.
+' - Add SHOW_LEGEND() at the end of the puml code.
+
+@startuml c4-diagram
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+title Ghostwriter MCP Server - Component Diagram
+
+Person_Ext(mcpClient, "MCP Client", "AI assistant, IDE, or automation process that invokes MCP tools over STDIO or HTTP.")
+
+System_Boundary(gwMcpServer, "Ghostwriter MCP Server") {
+    Component(mcpRuntime, "Machai MCP Server Runtime", "Java / MCP", "Application entry point and transport layer that exposes registered tools over STDIO or HTTP.")
+    Component(ghostwriterTools, "Ghostwriter Tools", "Java library", "Provides code assistance workflows and project-aware tool implementations.")
+    Component(bindexServices, "Bindex Core Services", "Java library", "Retrieves metadata, registration data, and library recommendations used by MCP tools.")
+    Component(configuration, "Maven Application Configuration", "pom.xml / manifest", "Assembles the executable server artifact and defines the main class, version, and bundled dependencies.")
+}
+
+System_Ext(genAiProvider, "Configured Generative AI Provider", "External model provider selected by gw.model and genai.serverId configuration.")
+System_Ext(packageRepos, "Maven / Library Metadata Sources", "External repositories and indexes used for dependency metadata and recommendations.")
+
+Rel(mcpClient, mcpRuntime, "Invokes MCP tools", "STDIO / HTTP")
+Rel(mcpRuntime, ghostwriterTools, "Registers and executes project assistance tools", "Java API")
+Rel(mcpRuntime, bindexServices, "Exposes metadata and recommendation tools", "Java API")
+Rel(configuration, mcpRuntime, "Defines executable entry point and packaging", "Maven")
+Rel(ghostwriterTools, genAiProvider, "Requests code generation and analysis", "Provider API")
+Rel(bindexServices, packageRepos, "Looks up dependency metadata and recommendations", "Repository/index APIs")
+Rel(ghostwriterTools, bindexServices, "Uses metadata to enrich recommendations", "Java API")
+
+SHOW_LEGEND()
+@enduml
