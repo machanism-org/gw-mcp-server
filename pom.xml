@@ -5,10 +5,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.machanism.machai</groupId>
+	<parent>
+		<groupId>org.machanism.machai</groupId>
+		<artifactId>machai</artifactId>
+		<version>1.4.1-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>gw-mcp-server</artifactId>
 	<name>Ghostwriter MCP Server</name>
-	<version>1.4.1-SNAPSHOT</version>
 
 	<description>
 		Ghostwriter MCP Server combines Ghostwriter and Bindex Core's metadata
@@ -74,13 +78,27 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.machanism.machai</groupId>
-				<artifactId>gw-maven-plugin</artifactId>
-				<version>${project.version}</version>
-			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<links>
+						<link>
+							https://docs.oracle.com/en/java/javase/11/docs/api/</link>
+						<link>
+							https://macha.machanism.org/core/core-commons/configurator/apidocs/</link>
+						<link>
+							https://machai.machanism.org/ghostwriter/apidocs/</link>
+					</links>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<licenses>
 		<license>
@@ -89,17 +107,5 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
-	<scm>
-		<connection>
-			scm:git:https://github.com/machanism-org/gw-mcp-server.git</connection>
-		<developerConnection>
-			scm:git:https://github.com/machanism-org/gw-mcp-server.git</developerConnection>
-		<url>https://github.com/machanism-org/gw-mcp-server.git</url>
-	</scm>
-
-	<issueManagement>
-		<url>https://github.com/machanism-org/gw-mcp-server/issues</url>
-	</issueManagement>
 
 </project>
