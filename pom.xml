@@ -108,4 +108,10 @@
 		</license>
 	</licenses>
 
+	<scm>
+		<connection>scm:git:https://github.com/machanism-org/gw-mcp-server.git</connection>
+		<developerConnection>scm:git:https://github.com/machanism-org/gw-mcp-server.git</developerConnection>
+		<url>https://github.com/machanism-org/gw-mcp-server.git</url>
+	</scm>
+
 </project>
