@@ -26,6 +26,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gw.model>CodeMie:gpt-5.5-2026-04-24</gw.model>
 		<genai.serverId>CodeMie</genai.serverId>
+		<gw.config>../gw.properties</gw.config>
+		<gw.acts>../acts</gw.acts>
 	</properties>
 
 	<dependencies>
@@ -78,6 +80,21 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.machanism.machai</groupId>
+				<artifactId>gw-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>bindex</id>
+						<goals>
+							<goal>act</goal>
+						</goals>
+						<configuration>
+							<act>bindex</act>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -110,7 +127,8 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/machanism-org/gw-mcp-server.git</connection>
-		<developerConnection>scm:git:https://github.com/machanism-org/gw-mcp-server.git</developerConnection>
+		<developerConnection>
+			scm:git:https://github.com/machanism-org/gw-mcp-server.git</developerConnection>
 		<url>https://github.com/machanism-org/gw-mcp-server.git</url>
 	</scm>
 
