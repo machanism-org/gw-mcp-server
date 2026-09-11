@@ -26,8 +26,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gw.model>CodeMie:gpt-5.5-2026-04-24</gw.model>
 		<genai.serverId>CodeMie</genai.serverId>
-		<gw.config>../gw.properties</gw.config>
-		<gw.acts>../acts</gw.acts>
 	</properties>
 
 	<dependencies>
