@@ -42,16 +42,18 @@ The server is useful for AI-assisted development environments, repeatable projec
 
 ## Supported Functional Tools
 
+The server distribution includes the functional tools supplied by Ghostwriter and Bindex Core. The standalone [Bindex Core jar](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download) can also be added to a compatible Machai MCP Server classpath when Bindex tools are needed independently.
+
 ### Ghostwriter tools
 
 - **Act tools:** inspect, run, and retrieve reusable named workflows with `get-act-details`, `perform-act`, and `get-act-result`.
 - **Act episode control tools:** navigate or repeat ActProcessor episodes with `move-to-episode` and `repeate-episode`.
 - **Command tools:** run approved project commands and inspect captured logs with `run-sys-command`, `get-log-chunk`, and `get-log-matches`.
 - **Execution control tools:** intentionally terminate processing or end an interactive task with `terminate-execution` and `end-task`.
-- **File tools:** list directories, recursively inspect files, read and write files, and apply targeted patches.
-- **Guidance tools:** find and process files containing guidance tags, including asynchronous processing result retrieval.
-- **Project context tools:** store, retrieve, push, and pop project-scoped variables shared between workflows.
-- **Web tools:** fetch web content or call REST APIs with configurable headers, authentication, timeouts, selectors, and character sets.
+- **File tools:** inspect a directory with `list-files-in-directory`; recursively inventory files with `get-recursive-file-list`; inspect directory contents with `get-recursive-folder-list`; read or replace text with `read-file` and `write-file`; and make focused edits with `apply-patch-to-file`.
+- **Guidance tools:** identify files containing guidance tags with `get-files-with-guidance-tags`, process them with `process-files-with-guidance-tag`, and retrieve asynchronous processing reports with `get-process-guidance-tag-files-result`. These tools are supported for ActProcessor workflows.
+- **Project context tools:** store and retrieve shared project state with `put-project-context-variable` and `get-project-context-variables`, or accumulate and consume values with `push-project-context-variable` and `pop-project-context-variable`.
+- **Web tools:** retrieve an HTTP(S) page or project-scoped file with `get-web-content`, including optional plain-text conversion or CSS selection, and make configurable REST requests with `call-rest-api`. Both support headers, character sets, timeouts, and URL user-info Basic authentication.
 
 ### Bindex Core tools and resources
 
@@ -66,8 +68,8 @@ The server is useful for AI-assisted development environments, repeatable projec
 
 Download release artifacts from SourceForge:
 
-- [Ghostwriter MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
 - [Bindex MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/bindex-mcp-server/releases/)
+- [![Download Bindex-Core](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download) ([download `bindex.jar`](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download))
 
 ## Usage
 
@@ -76,28 +78,30 @@ The packaged jar can be used as either a STDIO MCP server or an HTTP MCP server.
 Run in STDIO mode:
 
 ```bash
-java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar
+java -jar gw-mcp-server-1.4.1.jar
 ```
 
 Run in HTTP stateless mode on port `45000`:
 
 ```bash
-java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar --port 45000
+java -jar gw-mcp-server-1.4.1.jar --port 45000
 ```
 
 Run in HTTP streamable-session mode with a project directory and configuration file:
 
 ```bash
-java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar \
+java -jar gw-mcp-server-1.4.1.jar \
   --projectDir /path/to/project \
   --config /path/to/mcp.properties \
   --name gw-mcp-server \
-  --version 1.4.1-SNAPSHOT \
+  --version 1.4.1 \
   --port 45000 \
   --session
 ```
 
 Common CLI options include `--projectDir`, `--config`, `--name`, `--version`, `--port`, and `--session`. If `--port` is omitted, the server starts in STDIO mode. If `--port` is supplied, the server starts over HTTP; `--session` switches HTTP transport from stateless to streamable mode.
+
+See the [Machai MCP Server CLI documentation](https://machai.machanism.org/machai-mcp-server/index.html#CLI) for the complete option reference and client configuration examples.
 
 ## Key Features
 
@@ -135,10 +139,10 @@ Create the assembled release artifact during install:
 mvn clean install
 ```
 
-Start the server after obtaining or building the jar:
+Start the server after downloading the release jar or running `mvn clean install` (the assembly is written to the release directory configured by `MACHANISM_PACK_DIR`):
 
 ```bash
-java -jar target/gw-mcp-server-1.4.1-SNAPSHOT.jar --port 45000 --projectDir /path/to/project
+java -jar gw-mcp-server-1.4.1.jar --port 45000 --projectDir /path/to/project
 ```
 
 ### Typical Workflow
@@ -162,4 +166,4 @@ java -jar target/gw-mcp-server-1.4.1-SNAPSHOT.jar --port 45000 --projectDir /pat
 - [Machai MCP Server CLI documentation](https://machai.machanism.org/machai-mcp-server/index.html#CLI)
 - [MCP Server Maven Plugin](https://machai.machanism.org/mcp-server-maven-plugin/index.html)
 - [Maven Central: Machai MCP Server](https://central.sonatype.com/artifact/org.machanism.machai/machai-mcp-server)
-- [SourceForge releases](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
+- [Bindex MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/bindex-mcp-server/releases/)
