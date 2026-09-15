@@ -4,7 +4,6 @@ Generate or update the content as follows.
 # Page Structure: 
 1. Header
    - Project Title: need to use from pom.xml
-   - Maven Central Badge ([![Maven Central](https://img.shields.io/maven-central/v/[groupId]/[artifactId].svg)](https://central.sonatype.com/artifact/[groupId]/[artifactId])
    - Bindex Badge [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/[artifactId]/refs/heads/main/bindex.json)
 # Overview
    - Full description the project based on package-info.java files in source folder..
@@ -18,7 +17,6 @@ Generate or update the content as follows.
 
 # Ghostwriter MCP Server
 
-[![Maven Central](https://img.shields.io/maven-central/v/org.machanism.machai/gw-mcp-server.svg)](https://central.sonatype.com/artifact/org.machanism.machai/gw-mcp-server)
 [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/gw-mcp-server/refs/heads/main/bindex.json)
 
 ## Overview
@@ -35,12 +33,13 @@ The diagram is maintained in [`src/site/puml/c4-diagram.puml`](../puml/c4-diagra
 
 ## Supported AI providers
 
-This project sets **CodeMie** as its configured AI provider. Provider integration is delegated to the Ghostwriter and Machai runtime dependencies rather than implemented in this module. The POM therefore documents CodeMie as the project's configured provider; other providers are available only when supported and configured by the selected underlying runtime. Their provider identifiers, model names, credentials, and endpoint properties must be obtained from that runtime's documentation.
+AI-provider integration is supplied by the transitive Machai Generative AI client used by Ghostwriter. The runtime supports **CodeMie**, **OpenAI**, and **Anthropic**; this project's POM selects CodeMie by default. Choose a provider with `genai.serverId`, use a compatible provider-qualified model in `gw.model`, and supply credentials through runtime properties or environment variables rather than committing secrets to the POM.
 
 | Provider | Status | Configuration |
 | --- | --- | --- |
-| CodeMie | Configured by this project | Set `genai.serverId=CodeMie` and `gw.model=CodeMie:gpt-5.5-2026-04-24`. Supply credentials and any endpoint settings through the Ghostwriter/Machai runtime configuration. |
-| Other runtime-supported providers | Deployment-defined | Replace `genai.serverId` and `gw.model` with values supported by the selected runtime provider, then configure its required credentials and connection properties. This module does not declare a separate adapter or provider list. |
+| CodeMie | Project default; chat and embeddings | Set `genai.serverId=CodeMie` and use a CodeMie model such as the default `CodeMie:gpt-5.5-2026-04-24`. Set `GENAI_USERNAME` and `GENAI_PASSWORD`; these may be a user name/password or client ID/client secret. Override `AUTH_URL` when using a non-default authentication endpoint. CodeMie dispatches supported GPT models through its OpenAI-compatible API and supported Claude models through its Anthropic-compatible API. |
+| OpenAI | Supported; chat and embeddings | Set `genai.serverId=OpenAI`, set `gw.model` to the required OpenAI model, and provide `OPENAI_API_KEY`. Optionally set `OPENAI_BASE_URL` for an OpenAI-compatible endpoint. |
+| Anthropic | Supported; chat | Set `genai.serverId=Anthropic`, set `gw.model` to the required Claude model, and provide `ANTHROPIC_API_KEY`. Optionally set `ANTHROPIC_BASE_URL` for a compatible endpoint. |
 
 ### Common configuration parameters
 
@@ -48,7 +47,12 @@ This project sets **CodeMie** as its configured AI provider. Provider integratio
 | --- | --- | --- |
 | `genai.serverId` | Generative-AI provider identifier used by Ghostwriter. | `CodeMie` |
 | `gw.model` | Provider-qualified model identifier used for Ghostwriter model requests. | `CodeMie:gpt-5.5-2026-04-24` |
-| Provider credentials and endpoint settings | Authentication, service URL, and other provider-specific connection values required by the selected runtime provider. | Not set by this module; configure them in the runtime/provider configuration. |
+| `GENAI_USERNAME` / `GENAI_PASSWORD` | CodeMie user credentials or OAuth client credentials. | No default; required for CodeMie authentication. |
+| `AUTH_URL` | CodeMie OAuth token endpoint. | `https://auth.codemie.lab.epam.com/realms/codemie-prod/protocol/openid-connect/token` |
+| `OPENAI_API_KEY` | API key used by the OpenAI provider. | No default; required when OpenAI is selected. |
+| `OPENAI_BASE_URL` | OpenAI API base URL; also used by CodeMie's OpenAI-compatible path. | Provider SDK default for OpenAI; `https://codemie.lab.epam.com/code-assistant-api` for CodeMie. |
+| `ANTHROPIC_API_KEY` | API key used by the Anthropic provider. | No default; required when Anthropic is selected. |
+| `ANTHROPIC_BASE_URL` | Anthropic API base URL; also used by CodeMie's Anthropic-compatible path. | Provider SDK default for Anthropic; `https://codemie.lab.epam.com/code-assistant-api` for CodeMie. |
 | `maven.compiler.release` | Java release used to compile the server artifact. | `17` |
 | `--projectDir` / `-d` | Project directory supplied to project-aware server workflows. | Runtime-defined; commonly the current project directory. |
 | `--port` / `-p` | Port that selects HTTP server mode. | Not set; no port starts STDIO mode. |
