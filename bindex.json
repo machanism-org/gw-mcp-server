@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/machanism-org/machai/refs/heads/main/bindex-core/src/main/resources/schema/bindex-schema-v2.json",
-  "id": "org.machanism.machai:gw-mcp-server:1.4.1-SNAPSHOT",
+  "id": "org.machanism.machai:gw-mcp-server:1.4.1",
   "name": "org.machanism.machai:gw-mcp-server",
-  "version": "1.4.1-SNAPSHOT",
+  "version": "1.4.1",
   "description": "Ghostwriter MCP Server is an executable Java 17 Model Context Protocol (MCP) server. It combines Ghostwriter project-aware code-assistance workflows with Bindex Core library-metadata retrieval, registration, and recommendation capabilities, and exposes them through the Machai MCP Server runtime. MCP clients, IDE integrations, and developer-automation processes can launch it as a local STDIO process or connect to its HTTP server mode. The server entry point is org.machanism.machai.mcp.server.McpServer. It can be configured with a server name, project directory, version, network port, and streamable HTTP session mode; Ghostwriter model-assisted workflows use the configured CodeMie provider and model settings described by this project.",
   "authors": [
     {
@@ -69,11 +69,11 @@
       "description": "Starts the unified Ghostwriter and Bindex MCP tool server. With no port option it uses STDIO; specifying -p or --port starts remote HTTP server mode. The -s or --session option enables streamable mode for the HTTP server.",
       "examples": [
         {
-          "snippet": "java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar --port 45000 --session",
+          "snippet": "java -jar gw-mcp-server-1.4.1.jar --port 45000 --session",
           "description": "Runs a streamable HTTP MCP server on port 45000. An HTTP-capable MCP client can then connect and discover the Ghostwriter and Bindex tools exposed by the runtime."
         },
         {
-          "snippet": "java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar --projectDir . --name ghostwriter-local",
+          "snippet": "java -jar gw-mcp-server-1.4.1.jar --projectDir . --name ghostwriter-local",
           "description": "Runs the server in its default STDIO mode, names it ghostwriter-local, and supplies the current project directory for project-aware workflows."
         }
       ]
@@ -99,7 +99,7 @@
       "type": "command-line options",
       "examples": [
         {
-          "snippet": "java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar -d . -n ghostwriter -p 45000 -s",
+          "snippet": "java -jar gw-mcp-server-1.4.1.jar -d . -n ghostwriter -p 45000 -s",
           "description": "Configures the project directory and server name, then starts streamable HTTP mode on port 45000."
         }
       ]
@@ -123,7 +123,7 @@
         "Install a Java 17 runtime and Maven.",
         "From the project root, build the executable artifact with mvn clean install.",
         "Configure CodeMie credentials and any required provider connection settings in the Ghostwriter or Machai runtime configuration. Use genai.serverId=CodeMie and gw.model=CodeMie:gpt-5.5-2026-04-24 when the defaults need to be stated explicitly.",
-        "Locate the assembled gw-mcp-server-1.4.1-SNAPSHOT.jar artifact produced by the build and configure the MCP client to launch java -jar followed by that JAR path and -d .",
+        "Locate the assembled gw-mcp-server-1.4.1.jar artifact produced by the build and configure the MCP client to launch java -jar followed by that JAR path and -d .",
         "Start the MCP client. Because no -p or --port is supplied, the client communicates with the server over standard input and output.",
         "Use the client's tool catalog to invoke an available Ghostwriter project workflow or Bindex metadata workflow."
       ],
@@ -134,7 +134,7 @@
       "steps": [
         "Build the project with mvn clean install and prepare the assembled executable JAR.",
         "Configure the selected AI provider through the underlying Ghostwriter or Machai runtime configuration if model-assisted workflows will be used.",
-        "Start the server with java -jar gw-mcp-server-1.4.1-SNAPSHOT.jar --projectDir . --port 45000 --session.",
+        "Start the server with java -jar gw-mcp-server-1.4.1.jar --projectDir . --port 45000 --session.",
         "Configure an HTTP-capable MCP client to connect to the server at the host and port where it is running.",
         "Connect the client and invoke the advertised Ghostwriter or Bindex tools for the target project."
       ],
@@ -142,7 +142,7 @@
     },
     {
       "name": "Declare the server artifact as a Maven dependency",
-      "configuration": "<dependency><groupId>org.machanism.machai</groupId><artifactId>gw-mcp-server</artifactId><version>1.4.1-SNAPSHOT</version></dependency>",
+      "configuration": "<dependency><groupId>org.machanism.machai</groupId><artifactId>gw-mcp-server</artifactId><version>1.4.1</version></dependency>",
       "steps": [
         "Add the shown dependency to a Maven project's pom.xml.",
         "Ensure the snapshot version is resolved from the appropriate snapshot repository or is available in the local Maven repository.",
@@ -152,9 +152,9 @@
     }
   ],
   "dependencies": [
-    "org.machanism.machai:ghostwriter:1.4.1-SNAPSHOT",
-    "org.machanism.machai:bindex-core:1.4.1-SNAPSHOT",
-    "org.machanism.machai:machai-mcp-server:1.4.1-SNAPSHOT",
+    "org.machanism.machai:ghostwriter:1.4.1",
+    "org.machanism.machai:bindex-core:1.4.1",
+    "org.machanism.machai:machai-mcp-server:1.4.1",
     "org.slf4j:slf4j-api:2.0.17"
   ],
   "location": {
@@ -163,7 +163,7 @@
     "coordinates": {
       "group": "org.machanism.machai",
       "artifactId": "gw-mcp-server",
-      "version": "1.4.1-SNAPSHOT",
+      "version": "1.4.1",
       "extension": "jar"
     }
   }
