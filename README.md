@@ -15,7 +15,7 @@ Generate or update the content as follows.
    - Use: src/site/resources/images/c4-diagram.png
 4. Supported Functional Tools.   
 5. Download Page
-   - url: `https://sourceforge.net/projects/machanism/files/machai/bindex-mcp-server/releases/`.
+   - url: `https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/`.
 6. Usage
    - Jar file can be used as a STDIO or HTTP MCP server, `how to use` information: `https://machai.machanism.org/machai-mcp-server/index.html#CLI`. 
 7. Key Features
@@ -30,7 +30,7 @@ Generate or update the content as follows.
 
 # Ghostwriter MCP Server
 
-[![SourceForge Downloads (folder)](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/) [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) 
+[![SourceForge Downloads (folder)](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/) [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/gw-mcp-server/refs/heads/main/bindex.json)
 
 ## Overview
 
@@ -70,8 +70,7 @@ The server distribution includes the functional tools supplied by Ghostwriter an
 
 Download release artifacts from SourceForge:
 
-- [Bindex MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/bindex-mcp-server/releases/)
-- [![Download Bindex-Core](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download) ([download `bindex.jar`](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download))
+- [Ghostwriter MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
 
 ## Usage
 
@@ -129,6 +128,14 @@ See the [Machai MCP Server CLI documentation](https://machai.machanism.org/macha
 
 ### Basic Usage
 
+Run the MCP Server Maven Plugin to start a stateless HTTP server for the current Maven project:
+
+```bash
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.1:stateless \
+  -Dmcp.port=45000 \
+  -Dmcp.config=/path/to/mcp.properties
+```
+
 Build the project:
 
 ```bash
@@ -168,4 +175,4 @@ java -jar gw-mcp-server-1.4.1.jar --port 45000 --projectDir /path/to/project
 - [Machai MCP Server CLI documentation](https://machai.machanism.org/machai-mcp-server/index.html#CLI)
 - [MCP Server Maven Plugin](https://machai.machanism.org/mcp-server-maven-plugin/index.html)
 - [Maven Central: Machai MCP Server](https://central.sonatype.com/artifact/org.machanism.machai/machai-mcp-server)
-- [Bindex MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/bindex-mcp-server/releases/)
+- [Ghostwriter MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
