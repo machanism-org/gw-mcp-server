@@ -6,6 +6,7 @@ Generate or update the content as follows.
    - Project Title: need to use from pom.xml  
    - [![SourceForge Downloads (folder)](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
    - [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) 
+   - Bindex Badge [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/[artifactId]/refs/heads/main/bindex.json)
 2. Overview
    - Review the relatad web page: `https://machai.machanism.org/ghostwriter/functional-tools.html` (selector: #bodyColumn).
    - Review the relatad web page: `https://machai.machanism.org/bindex-core/functional-tools.html` (selector: #bodyColumn).
