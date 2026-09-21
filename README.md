@@ -30,6 +30,8 @@ Generate or update the content as follows.
 
 # Ghostwriter MCP Server
 
+This project is published as `org.machanism.machai:gw-mcp-server` and requires Java 17 or newer.
+
 [![SourceForge Downloads (folder)](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/) [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/gw-mcp-server/refs/heads/main/bindex.json)
 
 ## Overview
@@ -44,7 +46,11 @@ The server is useful for AI-assisted development environments, repeatable projec
 
 ## Supported Functional Tools
 
-The server distribution includes the functional tools supplied by Ghostwriter and Bindex Core. The standalone [Bindex Core jar](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download) can also be added to a compatible Machai MCP Server classpath when Bindex tools are needed independently.
+The server distribution includes the functional tools supplied by Ghostwriter and Bindex Core. Download the standalone Bindex Core jar here:
+
+[![Download Bindex-Core](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/machanism/files/machai/bindex/bindex.jar/download)
+
+Add `bindex.jar` to the classpath to use these Bindex-related functional tools with the [Machai MCP Server](https://machai.machanism.org/mcp-machai-server/index.html). It can also be included alongside this server when Bindex tools are needed independently.
 
 ### Ghostwriter tools
 
@@ -52,7 +58,7 @@ The server distribution includes the functional tools supplied by Ghostwriter an
 - **Act episode control tools:** navigate or repeat ActProcessor episodes with `move-to-episode` and `repeate-episode`.
 - **Command tools:** run approved project commands and inspect captured logs with `run-sys-command`, `get-log-chunk`, and `get-log-matches`.
 - **Execution control tools:** intentionally terminate processing or end an interactive task with `terminate-execution` and `end-task`.
-- **File tools:** inspect a directory with `list-files-in-directory`; recursively inventory files with `get-recursive-file-list`; inspect directory contents with `get-recursive-folder-list`; read or replace text with `read-file` and `write-file`; and make focused edits with `apply-patch-to-file`.
+- **File tools:** inspect a directory with `list-files-in-directory`; recursively inventory files with `get-recursive-file-list`; inspect directory contents with `get-recursive-folder-list`; read or replace text with `read-file` and `write-file`; and make focused edits with `apply-patch-to-file`. The directory-listing tool accepts an optional `path` and defaults to `.`.
 - **Guidance tools:** identify files containing guidance tags with `get-files-with-guidance-tags`, process them with `process-files-with-guidance-tag`, and retrieve asynchronous processing reports with `get-process-guidance-tag-files-result`. These tools are supported for ActProcessor workflows.
 - **Project context tools:** store and retrieve shared project state with `put-project-context-variable` and `get-project-context-variables`, or accumulate and consume values with `push-project-context-variable` and `pop-project-context-variable`.
 - **Web tools:** retrieve an HTTP(S) page or project-scoped file with `get-web-content`, including optional plain-text conversion or CSS selection, and make configurable REST requests with `call-rest-api`. Both support headers, character sets, timeouts, and URL user-info Basic authentication.
@@ -76,26 +82,26 @@ Download release artifacts from SourceForge:
 
 The packaged jar can be used as either a STDIO MCP server or an HTTP MCP server. The main class is `org.machanism.machai.mcp.server.McpServer`.
 
-Run in STDIO mode:
+Run in STDIO mode (the default when `--port` is omitted):
 
 ```bash
-java -jar gw-mcp-server-1.4.1.jar
+java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar
 ```
 
 Run in HTTP stateless mode on port `45000`:
 
 ```bash
-java -jar gw-mcp-server-1.4.1.jar --port 45000
+java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar --port 45000
 ```
 
 Run in HTTP streamable-session mode with a project directory and configuration file:
 
 ```bash
-java -jar gw-mcp-server-1.4.1.jar \
+java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar \
   --projectDir /path/to/project \
   --config /path/to/mcp.properties \
   --name gw-mcp-server \
-  --version 1.4.1 \
+  --version 1.4.2-SNAPSHOT \
   --port 45000 \
   --session
 ```
@@ -131,7 +137,7 @@ See the [Machai MCP Server CLI documentation](https://machai.machanism.org/macha
 Run the MCP Server Maven Plugin to start a stateless HTTP server for the current Maven project:
 
 ```bash
-mvn org.machanism.machai:mcp-server-maven-plugin:1.4.1:stateless \
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:stateless \
   -Dmcp.port=45000 \
   -Dmcp.config=/path/to/mcp.properties
 ```
@@ -151,7 +157,7 @@ mvn clean install
 Start the server after downloading the release jar or running `mvn clean install` (the assembly is written to the release directory configured by `MACHANISM_PACK_DIR`):
 
 ```bash
-java -jar gw-mcp-server-1.4.1.jar --port 45000 --projectDir /path/to/project
+java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar --port 45000 --projectDir /path/to/project
 ```
 
 ### Typical Workflow
