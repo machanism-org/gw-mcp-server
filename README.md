@@ -72,6 +72,12 @@ Add `bindex.jar` to the classpath to use these Bindex-related functional tools w
 - **`getBindexSchema` resource:** expose the Bindex v2 JSON Schema for validation.
 - **`generate-bindex` prompt:** provide the prompt template used to generate Bindex descriptor files.
 
+### MCP Server Maven Plugin tool
+
+- **`stop-mcp-server`:** request an orderly shutdown of a running Machai MCP Server. It accepts an optional integer `exit-code` (default `0`), acknowledges the request immediately, and performs the shutdown in the background.
+
+The [MCP Server Maven Plugin](https://machai.machanism.org/mcp-server-maven-plugin/index.html) provides the `stateless` and `streamable` aggregator goals. Both goals configure and start an HTTP MCP server using the Maven project's metadata, base directory, port, configuration file, and registered tools.
+
 ## Download Page
 
 Download release artifacts from SourceForge:
@@ -106,6 +112,22 @@ java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar \
   --session
 ```
 
+The same HTTP transports can be started from a Maven build with the MCP Server Maven Plugin. Use `stateless` for stateless HTTP:
+
+```bash
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:stateless \
+  -Dmcp.port=45000 \
+  -Dmcp.config=/path/to/mcp.properties
+```
+
+Use `streamable` when the client requires streamable HTTP sessions:
+
+```bash
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:streamable \
+  -Dmcp.port=45000 \
+  -Dmcp.config=/path/to/mcp.properties
+```
+
 Common CLI options include `--projectDir`, `--config`, `--name`, `--version`, `--port`, and `--session`. If `--port` is omitted, the server starts in STDIO mode. If `--port` is supplied, the server starts over HTTP; `--session` switches HTTP transport from stateless to streamable mode.
 
 See the [Machai MCP Server CLI documentation](https://machai.machanism.org/machai-mcp-server/index.html#CLI) for the complete option reference and client configuration examples.
@@ -117,6 +139,7 @@ See the [Machai MCP Server CLI documentation](https://machai.machanism.org/macha
 - Exposes stateless HTTP and streamable HTTP session modes.
 - Enables project-aware file, command, guidance, context, web, and workflow automation.
 - Supports Bindex metadata retrieval, registration, validation resources, and library recommendations.
+- Supports Maven-driven stateless and streamable HTTP server startup through the MCP Server Maven Plugin.
 - Uses Java 17 and Maven packaging with dependencies assembled into a runnable release artifact.
 - Allows MCP clients to configure server metadata, project directory, port, and runtime configuration at launch.
 - Keeps functional tools decoupled from the MCP transport while publishing them through a standard MCP-compatible interface.
