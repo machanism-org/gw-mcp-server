@@ -121,4 +121,8 @@
 		<url>https://github.com/machanism-org/gw-mcp-server.git</url>
 	</scm>
 
+	<issueManagement>
+		<url>https://github.com/machanism-org/gw-mcp-server/issues</url>
+	</issueManagement>
+
 </project>
