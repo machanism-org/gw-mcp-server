@@ -203,5 +203,6 @@ java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar --port 45000 --projectDir /path/to/pr
 - [Bindex Core functional tools](https://machai.machanism.org/bindex-core/functional-tools.html)
 - [Machai MCP Server CLI documentation](https://machai.machanism.org/machai-mcp-server/index.html#CLI)
 - [MCP Server Maven Plugin](https://machai.machanism.org/mcp-server-maven-plugin/index.html)
+- [Maven Central: Ghostwriter MCP Server](https://central.sonatype.com/artifact/org.machanism.machai/gw-mcp-server)
 - [Maven Central: Machai MCP Server](https://central.sonatype.com/artifact/org.machanism.machai/machai-mcp-server)
 - [Ghostwriter MCP Server releases](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
