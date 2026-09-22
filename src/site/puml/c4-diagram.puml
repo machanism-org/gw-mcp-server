@@ -20,6 +20,7 @@ Person_Ext(mcpClient, "MCP Client", "AI assistant, IDE, or automation process th
 
 System_Boundary(gwMcpServer, "Ghostwriter MCP Server") {
     Component(mcpRuntime, "MCP Server Runtime and CLI", "Java / MCP", "McpServer entry point that loads runtime configuration, registers tools, and exposes them over STDIO or HTTP.")
+    Component(runtimeConfiguration, "Runtime Configuration", "Java properties", "Loads the MCP configuration file and supplies server, project, transport, and generative-AI settings to the runtime and tools.")
     Component(ghostwriterTools, "Ghostwriter Tools", "Java library", "Provides project-aware file, command, web, context, guidance, and AI-assisted workflow operations.")
     Component(bindexServices, "Bindex Core Services", "Java library", "Retrieves, validates, and registers Bindex metadata and provides semantic library recommendations.")
 }
@@ -29,8 +30,11 @@ System_Ext(packageRepos, "Maven / Library Metadata Sources", "External repositor
 System_Ext(bindexRegistry, "Bindex Registry", "External Bindex service that stores and serves registered metadata descriptors.")
 
 Rel(mcpClient, mcpRuntime, "Invokes MCP tools", "STDIO / HTTP")
+Rel(mcpRuntime, runtimeConfiguration, "Loads server and tool configuration", "Properties API")
 Rel(mcpRuntime, ghostwriterTools, "Registers and executes project assistance tools", "Java API")
 Rel(mcpRuntime, bindexServices, "Exposes metadata and recommendation tools", "Java API")
+Rel(runtimeConfiguration, ghostwriterTools, "Supplies provider and workflow settings", "Configuration API")
+Rel(runtimeConfiguration, bindexServices, "Supplies service settings", "Configuration API")
 Rel(ghostwriterTools, genAiProvider, "Requests code generation and analysis", "Provider API")
 Rel(bindexServices, packageRepos, "Looks up dependency metadata and recommendations", "Repository/index APIs")
 Rel(bindexServices, bindexRegistry, "Retrieves and registers Bindex descriptors", "Bindex API")

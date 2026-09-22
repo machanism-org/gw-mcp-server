@@ -140,7 +140,7 @@ See the [Machai MCP Server CLI documentation](https://machai.machanism.org/macha
 - Enables project-aware file, command, guidance, context, web, and workflow automation.
 - Supports Bindex metadata retrieval, registration, validation resources, and library recommendations.
 - Supports Maven-driven stateless and streamable HTTP server startup through the MCP Server Maven Plugin.
-- Uses Java 17 and Maven packaging with dependencies assembled into a runnable release artifact.
+- Uses Java 17 and Maven packaging; the optional `pack` profile assembles dependencies into a runnable release artifact.
 - Allows MCP clients to configure server metadata, project directory, port, and runtime configuration at launch.
 - Keeps functional tools decoupled from the MCP transport while publishing them through a standard MCP-compatible interface.
 
@@ -171,13 +171,13 @@ Build the project:
 mvn clean package
 ```
 
-Create the assembled release artifact during install:
+Create the assembled release artifact during install by enabling the `pack` profile:
 
 ```bash
-mvn clean install
+mvn -Ppack clean install
 ```
 
-Start the server after downloading the release jar or running `mvn clean install` (the assembly is written to the release directory configured by `MACHANISM_PACK_DIR`):
+Start the server after downloading the release jar or running `mvn -Ppack clean install` (the assembly is written to the release directory configured by `MACHANISM_PACK_DIR`):
 
 ```bash
 java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar --port 45000 --projectDir /path/to/project
