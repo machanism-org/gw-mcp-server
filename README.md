@@ -54,27 +54,27 @@ Add `bindex.jar` to the classpath to use these Bindex-related functional tools w
 
 ### Ghostwriter tools
 
-- **Act tools:** inspect, run, and retrieve reusable named workflows with `get-act-details`, `perform-act`, and `get-act-result`.
-- **Act episode control tools:** navigate or repeat ActProcessor episodes with `move-to-episode` and `repeate-episode`.
-- **Command tools:** run approved project commands and inspect captured logs with `run-sys-command`, `get-log-chunk`, and `get-log-matches`.
-- **Execution control tools:** intentionally terminate processing or end an interactive task with `terminate-execution` and `end-task`.
-- **File tools:** inspect a directory with `list-files-in-directory`; recursively inventory files with `get-recursive-file-list`; inspect directory contents with `get-recursive-folder-list`; read or replace text with `read-file` and `write-file`; and make focused edits with `apply-patch-to-file`. The directory-listing tool accepts an optional `path` and defaults to `.`.
+- **Act tools:** inspect, run, and retrieve reusable named workflows with `get_act_details`, `perform_act`, and `get_act_result`.
+- **Act episode control tools:** navigate or repeat ActProcessor episodes with `move_to_episode` and `repeate_episode`.
+- **Command tools:** run approved project commands and inspect captured logs with `run_sys_command`, `get_log_chunk`, and `get_log_matches`.
+- **Execution control tools:** intentionally terminate processing or end an interactive task with `terminate_execution` and `end_task`.
+- **File tools:** inspect a directory with `list_files_in_directory`; recursively inventory files with `get_recursive_file_list`; inspect directory contents with `get_recursive_folder_list`; read or replace text with `read_file` and `write_file`; and make focused edits with `apply_patch_to_file`. The directory-listing tool accepts an optional `path` and defaults to `.`.
 - **Guidance tools:** identify files containing guidance tags with `get-files-with-guidance-tags`, process them with `process-files-with-guidance-tag`, and retrieve asynchronous processing reports with `get-process-guidance-tag-files-result`. These tools are supported for ActProcessor workflows.
-- **Project context tools:** store and retrieve shared project state with `put-project-context-variable` and `get-project-context-variables`, or accumulate and consume values with `push-project-context-variable` and `pop-project-context-variable`.
-- **Web tools:** retrieve an HTTP(S) page or project-scoped file with `get-web-content`, including optional plain-text conversion or CSS selection, and make configurable REST requests with `call-rest-api`. Both support headers, character sets, timeouts, and URL user-info Basic authentication.
+- **Project context tools:** store and retrieve shared project state with `put_project_context_variable` and `get_project_context_variables`, or accumulate and consume values with `push_project_context_variable` and `pop_project_context_variable`.
+- **Web tools:** retrieve an HTTP(S) page or project-scoped file with `get_web_content`, including optional plain-text conversion or CSS selection, and make configurable REST requests with `call_rest_api`. Both support headers, character sets, timeouts, and URL user-info Basic authentication.
 
 ### Bindex Core tools and resources
 
-- **`get-bindex`:** retrieve a Bindex descriptor from a registered identifier, HTTP(S) URL, or `file://` path, optionally selecting fields with a GraphQL-style query.
-- **`pick-libraries`:** recommend libraries from a natural-language description of project needs using semantic relevance criteria.
-- **`register-bindex`:** register a Bindex descriptor read from a project file or HTTP(S) URL.
-- **`register-bindex-json`:** register a Bindex descriptor supplied directly as JSON.
+- **`get_bindex`:** retrieve a Bindex descriptor from a registered identifier, HTTP(S) URL, or `file://` path, optionally selecting fields with a GraphQL-style query.
+- **`pick_libraries`:** recommend libraries from a natural-language description of project needs using semantic relevance criteria.
+- **`register_bindex`:** register a Bindex descriptor read from a project file or HTTP(S) URL.
+- **`register_bindex_json`:** register a Bindex descriptor supplied directly as JSON.
 - **`getBindexSchema` resource:** expose the Bindex v2 JSON Schema for validation.
 - **`generate-bindex` prompt:** provide the prompt template used to generate Bindex descriptor files.
 
 ### MCP Server Maven Plugin tool
 
-- **`stop-mcp-server`:** request an orderly shutdown of a running Machai MCP Server. It accepts an optional integer `exit-code` (default `0`), acknowledges the request immediately, and performs the shutdown in the background.
+- **`stop_mcp_server`:** request an orderly shutdown of a running Machai MCP Server. It accepts an optional integer `exit_code` (default `0`), acknowledges the request immediately, and performs the shutdown in the background.
 
 The [MCP Server Maven Plugin](https://machai.machanism.org/mcp-server-maven-plugin/index.html) provides the `stateless` and `streamable` aggregator goals. Both goals configure and start an HTTP MCP server using the Maven project's metadata, base directory, port, configuration file, and registered tools.
 
