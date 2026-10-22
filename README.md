@@ -54,16 +54,19 @@ Add `bindex.jar` to the classpath to use these Bindex-related functional tools w
 
 ### Ghostwriter tools
 
+- **Availability:** Act tools are available except when the active processor is `GuidanceProcessor`; episode-control tools are intended for `ActProcessor`; termination tools are intended for `AIFileProcessor`; guidance and project-context tools are available to supported processors other than `GuidanceProcessor`. These scopes reflect the tools' `@SupportedFor` declarations.
 - **Act tools:** inspect, run, and retrieve reusable named workflows with `get_act_details`, `perform_act`, and `get_act_result`.
 - **Act episode control tools:** navigate or repeat ActProcessor episodes with `move_to_episode` and `repeate_episode`.
 - **Command tools:** run approved project commands and inspect captured logs with `run_sys_command`, `get_log_chunk`, and `get_log_matches`.
 - **Execution control tools:** intentionally terminate processing or end an interactive task with `terminate_execution` and `end_task`.
 - **File tools:** inspect a directory with `list_files_in_directory`; recursively inventory files with `get_recursive_file_list`; inspect directory contents with `get_recursive_folder_list`; read or replace text with `read_file` and `write_file`; and make focused edits with `apply_patch_to_file`. The directory-listing tool accepts an optional `path` and defaults to `.`.
-- **Guidance tools:** identify files containing guidance tags with `get-files-with-guidance-tags`, process them with `process-files-with-guidance-tag`, and retrieve asynchronous processing reports with `get-process-guidance-tag-files-result`. These tools are supported for ActProcessor workflows.
+- **Guidance tools:** identify files containing guidance tags with `get_guidance_tagged_files`, process them with `process_guidance_tagged_files`, and retrieve asynchronous processing reports with `get_guidance_tagged_files_process_result`. These operations discover matching files, apply configured guidance instructions synchronously or asynchronously, and return a processing report when background work completes.
 - **Project context tools:** store and retrieve shared project state with `put_project_context_variable` and `get_project_context_variables`, or accumulate and consume values with `push_project_context_variable` and `pop_project_context_variable`.
 - **Web tools:** retrieve an HTTP(S) page or project-scoped file with `get_web_content`, including optional plain-text conversion or CSS selection, and make configurable REST requests with `call_rest_api`. Both support headers, character sets, timeouts, and URL user-info Basic authentication.
 
 ### Bindex Core tools and resources
+
+Bindex Core tools have no additional processor restriction described by `@SupportedFor`; they provide catalog and metadata operations when the Bindex Core jar is available on the runtime classpath.
 
 - **`get_bindex`:** retrieve a Bindex descriptor from a registered identifier, HTTP(S) URL, or `file://` path, optionally selecting fields with a GraphQL-style query.
 - **`pick_libraries`:** recommend libraries from a natural-language description of project needs using semantic relevance criteria.
@@ -74,7 +77,7 @@ Add `bindex.jar` to the classpath to use these Bindex-related functional tools w
 
 ### MCP Server Maven Plugin tool
 
-- **`stop_mcp_server`:** request an orderly shutdown of a running Machai MCP Server. It accepts an optional integer `exit_code` (default `0`), acknowledges the request immediately, and performs the shutdown in the background.
+- **`stop_mcp_server`:** request an orderly shutdown of a running Machai MCP Server. It is supported for `McpServer` as declared by its `@SupportedFor(McpServer.class)` annotation. It accepts an optional integer `exit_code` (default `0`), acknowledges the request immediately, and performs the shutdown in the background.
 
 The [MCP Server Maven Plugin](https://machai.machanism.org/mcp-server-maven-plugin/index.html) provides the `stateless` and `streamable` aggregator goals. Both goals configure and start an HTTP MCP server using the Maven project's metadata, base directory, port, configuration file, and registered tools.
 

@@ -19,10 +19,11 @@ title Ghostwriter MCP Server - Component Diagram
 Person_Ext(mcpClient, "MCP Client", "AI assistant, IDE, or automation process that invokes MCP tools over STDIO or HTTP.")
 
 System_Boundary(gwMcpServer, "Ghostwriter MCP Server") {
-    Component(mcpRuntime, "MCP Server Runtime and CLI", "Java / MCP", "McpServer entry point that loads runtime configuration, registers tools, and exposes them over STDIO or HTTP.")
+    Component(mcpRuntime, "MCP Server Runtime and CLI", "Java / MCP", "McpServer entry point that initializes the server, registers tools and resources, and coordinates requests.")
+    Component(transportAdapters, "MCP Transport Adapters", "STDIO / HTTP", "Serve the registered MCP capabilities to local clients over STDIO or to remote clients over stateless or streamable HTTP.")
     Component(runtimeConfiguration, "Runtime Configuration", "Java properties", "Loads the MCP configuration file and supplies server, project, transport, and generative-AI settings to the runtime and tools.")
-    Component(ghostwriterTools, "Ghostwriter Tools", "Java library", "Provides project-aware file, command, web, context, guidance, and AI-assisted workflow operations.")
-    Component(bindexServices, "Bindex Core Services", "Java library", "Retrieves, validates, and registers Bindex metadata and provides semantic library recommendations.")
+    Component(ghostwriterTools, "Ghostwriter Functional Tools", "Ghostwriter Java library", "Provides project-aware file, command, web, context, guidance, and reusable Act workflow operations, including AI-assisted processing.")
+    Component(bindexServices, "Bindex Core Tools and Resources", "Bindex Core Java library", "Retrieves, validates, and registers Bindex metadata, exposes its schema and generation prompt, and recommends libraries.")
 }
 
 System_Ext(genAiProvider, "Configured Generative AI Provider", "External provider such as CodeMie selected by gw.model and genai.serverId configuration.")
@@ -30,6 +31,8 @@ System_Ext(packageRepos, "Maven / Library Metadata Sources", "External repositor
 System_Ext(bindexRegistry, "Bindex Registry", "External Bindex service that stores and serves registered metadata descriptors.")
 
 Rel(mcpClient, mcpRuntime, "Invokes MCP tools", "STDIO / HTTP")
+Rel(mcpRuntime, transportAdapters, "Starts configured transport", "Java API")
+Rel(transportAdapters, mcpClient, "Serves MCP requests and responses", "STDIO / HTTP")
 Rel(mcpRuntime, runtimeConfiguration, "Loads server and tool configuration", "Properties API")
 Rel(mcpRuntime, ghostwriterTools, "Registers and executes project assistance tools", "Java API")
 Rel(mcpRuntime, bindexServices, "Exposes metadata and recommendation tools", "Java API")

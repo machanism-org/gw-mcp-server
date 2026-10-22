@@ -35,18 +35,18 @@ The diagram is maintained in [`src/site/puml/c4-diagram.puml`](../puml/c4-diagra
 
 ## Supported AI providers
 
-AI-provider integration is supplied by the Machai Generative AI client used by Ghostwriter. **CodeMie** is the provider documented by this project and selected by its POM. Choose the provider with `genai.serverId`, use a provider-qualified model in `gw.model`, and supply credentials through runtime properties or environment variables rather than committing secrets to the POM. Other providers are not declared or documented in this module, so they are not listed as supported here.
+AI-provider integration is supplied by the Machai Generative AI client used by Ghostwriter. **CodeMie** is the provider documented for this project and its configured provider-qualified model is recorded in the project metadata. Choose the provider with `genai.serverId`, use a provider-qualified model in `gw.model`, and supply credentials through runtime properties or environment variables rather than committing secrets to the POM. Other providers are not declared or documented in this module, so they are not listed as supported here.
 
 | Provider | Status | Configuration |
 | --- | --- | --- |
-| CodeMie | Project default; model-assisted workflows | Set `genai.serverId=CodeMie` and use a CodeMie model such as the default `CodeMie:gpt-5.5-2026-04-24`. Set `GENAI_USERNAME` and `GENAI_PASSWORD`; these may be a user name/password or client ID/client secret. Override `AUTH_URL` when using a non-default authentication endpoint. |
+| CodeMie | Project-configured provider; model-assisted workflows | Set `genai.serverId=CodeMie` and use the configured model `CodeMie:gpt-5.6-luna-2026-07-09`. Set `GENAI_USERNAME` and `GENAI_PASSWORD`; these may be a user name/password or client ID/client secret. Override `AUTH_URL` when using a non-default authentication endpoint. |
 
 ### Common configuration parameters
 
 | Parameter | Description | Default value in this project |
 | --- | --- | --- |
 | `genai.serverId` | Generative-AI provider identifier used by Ghostwriter. | `CodeMie` |
-| `gw.model` | Provider-qualified model identifier used for Ghostwriter model requests. | `CodeMie:gpt-5.5-2026-04-24` |
+| `gw.model` | Provider-qualified model identifier used for Ghostwriter model requests. | `CodeMie:gpt-5.6-luna-2026-07-09` |
 | `GENAI_USERNAME` / `GENAI_PASSWORD` | CodeMie user credentials or OAuth client credentials. | No default; required for CodeMie authentication. |
 | `AUTH_URL` | CodeMie OAuth token endpoint. | `https://auth.codemie.lab.epam.com/realms/codemie-prod/protocol/openid-connect/token` |
 | `maven.compiler.release` | Java release used to compile the server artifact. | `17` |
