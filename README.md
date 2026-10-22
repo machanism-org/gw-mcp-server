@@ -91,23 +91,23 @@ The packaged jar can be used as either a STDIO MCP server or an HTTP MCP server.
 Run in STDIO mode (the default when `--port` is omitted):
 
 ```bash
-java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar
+java -jar gw-mcp-server-1.4.2.jar
 ```
 
 Run in HTTP stateless mode on port `45000`:
 
 ```bash
-java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar --port 45000
+java -jar gw-mcp-server-1.4.2.jar --port 45000
 ```
 
 Run in HTTP streamable-session mode with a project directory and configuration file:
 
 ```bash
-java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar \
+java -jar gw-mcp-server-1.4.2.jar \
   --projectDir /path/to/project \
   --config /path/to/mcp.properties \
   --name gw-mcp-server \
-  --version 1.4.2-SNAPSHOT \
+  --version 1.4.2 \
   --port 45000 \
   --session
 ```
@@ -115,7 +115,7 @@ java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar \
 The same HTTP transports can be started from a Maven build with the MCP Server Maven Plugin. Use `stateless` for stateless HTTP:
 
 ```bash
-mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:stateless \
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2:stateless \
   -Dmcp.port=45000 \
   -Dmcp.config=/path/to/mcp.properties
 ```
@@ -123,7 +123,7 @@ mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:stateless \
 Use `streamable` when the client requires streamable HTTP sessions:
 
 ```bash
-mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:streamable \
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2:streamable \
   -Dmcp.port=45000 \
   -Dmcp.config=/path/to/mcp.properties
 ```
@@ -160,7 +160,7 @@ See the [Machai MCP Server CLI documentation](https://machai.machanism.org/macha
 Run the MCP Server Maven Plugin to start a stateless HTTP server for the current Maven project:
 
 ```bash
-mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2-SNAPSHOT:stateless \
+mvn org.machanism.machai:mcp-server-maven-plugin:1.4.2:stateless \
   -Dmcp.port=45000 \
   -Dmcp.config=/path/to/mcp.properties
 ```
@@ -180,7 +180,7 @@ mvn -Ppack clean install
 Start the server after downloading the release jar or running `mvn -Ppack clean install` (the assembly is written to the release directory configured by `MACHANISM_PACK_DIR`):
 
 ```bash
-java -jar gw-mcp-server-1.4.2-SNAPSHOT.jar --port 45000 --projectDir /path/to/project
+java -jar gw-mcp-server-1.4.2.jar --port 45000 --projectDir /path/to/project
 ```
 
 ### Typical Workflow
