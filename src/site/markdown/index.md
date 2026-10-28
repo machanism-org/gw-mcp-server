@@ -4,7 +4,7 @@ Generate or update the content as follows.
 # Page Structure: 
 1. Header
    - Project Title: need to use from pom.xml
-   - [![SourceForge Downloads (folder)](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
+   - [![Downloads](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/)
    - [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) 
    - Bindex Badge [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/[artifactId]/refs/heads/main/bindex.json)
 # Overview
@@ -19,42 +19,45 @@ Generate or update the content as follows.
 
 # Ghostwriter MCP Server
 
-[![SourceForge Downloads (folder)](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/) [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/gw-mcp-server/refs/heads/main/bindex.json)
+[![Download](https://img.shields.io/sourceforge/dt/machanism/machai%2Fgw-mcp-server%2Freleases)](https://sourceforge.net/projects/machanism/files/machai/gw-mcp-server/releases/) [![M8ven Score](https://m8ven.ai/badge/mcp/machanism-org/gw-mcp-server)](https://m8ven.ai/mcp/machanism-org/gw-mcp-server) [![bindex](https://img.shields.io/badge/bindex-blue.svg)](https://raw.githubusercontent.com/machanism-org/gw-mcp-server/refs/heads/main/bindex.json)
 
 ## Overview
 
-Ghostwriter MCP Server is an executable Java 17 Model Context Protocol (MCP) server. It combines Ghostwriter's project-aware code-assistance workflows with Bindex Core's library-metadata retrieval, registration, and recommendation capabilities, and publishes those capabilities through the Machai MCP Server runtime. MCP clients, IDE integrations, and developer-automation processes can launch the assembled JAR locally over STDIO or connect to the server's HTTP mode.
+Ghostwriter MCP Server is an executable Java 17 Model Context Protocol (MCP) server. The Maven project is named **Ghostwriter MCP Server** and publishes the `org.machanism.machai:gw-mcp-server` artifact. It combines Ghostwriter's project-aware code-assistance workflows with Bindex Core's metadata retrieval, registration, schema, and library-recommendation capabilities, and exposes them through the Machai MCP Server runtime.
 
-The `org.machanism.machai.mcp.server.McpServer` entry point starts the unified server. With no port option it uses STDIO; `--port` enables HTTP mode, and `--session` enables streamable HTTP sessions. The server can also receive a project directory, server name, advertised version, and properties configuration through the runtime's command-line options. Its tools support project-aware assistance, model-assisted workflows, dependency metadata discovery, Bindex descriptor retrieval and registration, and library recommendations. The POM declares the Ghostwriter, Bindex Core, and Machai MCP Server runtime modules that provide these capabilities.
+The executable entry point is `org.machanism.machai.mcp.server.McpServer`. Launching the assembled JAR without a port uses STDIO; `--port` enables HTTP, and `--session` enables streamable HTTP sessions. The server can also receive a project directory, server name, advertised version, and properties configuration through the runtime command-line options. Its tools support project-aware assistance, model-assisted workflows, dependency metadata discovery, Bindex descriptor retrieval and registration, and library recommendations.
 
-The source tree contains no `package-info.java` files. Accordingly, this overview is based on the Maven project description, declared dependencies, the executable entry point, and the project's Bindex metadata. Ghostwriter model-assisted workflows use the configured generative-AI provider; Bindex workflows use the configured metadata sources and registry services.
+No `package-info.java` files are present in this source tree. This overview therefore uses the Maven project description, its declared Ghostwriter, Bindex Core, and Machai MCP Server dependencies, the executable entry point recorded in the project metadata, and the Bindex descriptor. Ghostwriter model-assisted workflows use the configured generative-AI provider; Bindex workflows use configured metadata sources and registry services.
 
 ![Ghostwriter MCP Server component diagram](./images/c4-diagram.png)
 
-The diagram is maintained in [`src/site/puml/c4-diagram.puml`](../puml/c4-diagram.puml). It shows the MCP client, Machai MCP Server runtime, Ghostwriter tools, Bindex Core services, the configured AI provider, and the external metadata and registry systems with which they interact.
+The diagram is maintained in [`src/site/puml/c4-diagram.puml`](../puml/c4-diagram.puml). It shows the MCP client, runtime and transport adapters, runtime configuration, Ghostwriter tools, Bindex Core services, the configured AI provider, and external metadata and registry systems.
 
 ## Supported AI providers
 
-AI-provider integration is supplied by the Machai Generative AI client used by Ghostwriter. **CodeMie** is the provider documented for this project and its configured provider-qualified model is recorded in the project metadata. Choose the provider with `genai.serverId`, use a provider-qualified model in `gw.model`, and supply credentials through runtime properties or environment variables rather than committing secrets to the POM. Other providers are not declared or documented in this module, so they are not listed as supported here.
+The project metadata identifies **CodeMie** as the provider used by Ghostwriter's model-assisted workflows. No other provider is declared in this module, so no additional provider is claimed as supported here. Configure provider credentials outside source control through the runtime properties or environment supplied by the Ghostwriter/Machai configuration system.
 
-| Provider | Status | Configuration |
-| --- | --- | --- |
-| CodeMie | Project-configured provider; model-assisted workflows | Set `genai.serverId=CodeMie` and use the configured model `CodeMie:gpt-5.6-luna-2026-07-09`. Set `GENAI_USERNAME` and `GENAI_PASSWORD`; these may be a user name/password or client ID/client secret. Override `AUTH_URL` when using a non-default authentication endpoint. |
+| Provider | Supported configuration |
+| --- | --- |
+| CodeMie | Set `genai.serverId=CodeMie` when selecting the provider and use the provider-qualified model `gw.model=CodeMie:gpt-5.6-luna-2026-07-09`. Supply the required CodeMie user credentials or OAuth client credentials through the runtime configuration; do not commit them to the project. |
 
 ### Common configuration parameters
 
-| Parameter | Description | Default value in this project |
-| --- | --- | --- |
-| `genai.serverId` | Generative-AI provider identifier used by Ghostwriter. | `CodeMie` |
-| `gw.model` | Provider-qualified model identifier used for Ghostwriter model requests. | `CodeMie:gpt-5.6-luna-2026-07-09` |
-| `GENAI_USERNAME` / `GENAI_PASSWORD` | CodeMie user credentials or OAuth client credentials. | No default; required for CodeMie authentication. |
-| `AUTH_URL` | CodeMie OAuth token endpoint. | `https://auth.codemie.lab.epam.com/realms/codemie-prod/protocol/openid-connect/token` |
-| `maven.compiler.release` | Java release used to compile the server artifact. | `17` |
-| `--projectDir` / `-d` | Project directory supplied to project-aware server workflows. | Runtime-defined; commonly the current project directory. |
-| `--port` / `-p` | Port that selects HTTP server mode. | Not set; no port starts STDIO mode. |
-| `--session` / `-s` | Enables streamable sessions when HTTP mode is active. | Disabled. |
+The following values are documented by this project or its executable-server metadata. A value marked **not set** is intentionally selected at launch or by the runtime rather than hard-coded in this POM.
 
-Maven properties can be overridden with `-D` options or in the Maven configuration used to build or run the server. Keep provider credentials out of the POM and source control. See the Machai MCP Server runtime documentation for the complete provider and command-line configuration reference.
+| Parameter | Description | Default or project value |
+| --- | --- | --- |
+| `gw.model` | Provider-qualified model identifier used for Ghostwriter model-assisted requests. | `CodeMie:gpt-5.6-luna-2026-07-09` (project metadata) |
+| CodeMie credentials | User/password or OAuth client credentials required to authenticate with CodeMie. | No default; supply through runtime configuration or environment variables. |
+| `--projectDir` / `-d` | Project directory supplied to project-aware server workflows. | Runtime-defined; commonly the current directory. |
+| `--config` | Optional properties configuration file loaded before startup. | Runtime default when omitted; no project-specific file is committed. |
+| `--name` / `-n` | Server name advertised by the MCP runtime. | Runtime-defined. |
+| `--version` / `-v` | Version advertised by the MCP runtime. | Runtime-defined. |
+| `--port` / `-p` | Selects HTTP server mode. | Not set: the server uses STDIO. |
+| `--session` / `-s` | Enables streamable HTTP sessions when HTTP mode is active. | Disabled. |
+| `maven.compiler.release` | Java release used to compile the artifact. | `17` |
+
+Maven properties can be overridden with `-D` options. The optional `pack` profile assembles the runnable release JAR and writes it to the directory represented by `${env.MACHANISM_PACK_DIR}`. See the Machai MCP Server CLI documentation for the complete runtime option reference.
 
 ## Resources
 
