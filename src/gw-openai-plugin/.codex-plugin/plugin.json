@@ -1,0 +1,21 @@
+{
+  "name": "ghostwriter-agent",
+  "version": "1.0.2",
+  "description": "Connects to the Ghostwriter MCP server for Act workflows, project files, REST APIs, and project context operations.",
+  "author": {
+    "name": "Viktor Tovstyi"
+  },
+  "interface": {
+    "displayName": "Ghostwriter Agent",
+    "shortDescription": "Ghostwriter MCP tools",
+    "longDescription": "Use the Ghostwriter MCP server to run named Acts, inspect and edit project files, call REST APIs, retrieve web content, and manage project context variables.",
+    "developerName": "Plugin author",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "defaultPrompt": "Use the Ghostwriter MCP server to help with my project.",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
