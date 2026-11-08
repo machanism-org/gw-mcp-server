@@ -11,37 +11,31 @@
 @startuml c4-diagram
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-LAYOUT_WITH_LEGEND()
 LAYOUT_LEFT_RIGHT()
 
 title Ghostwriter MCP Server - Component Diagram
 
-Person_Ext(mcpClient, "MCP Client", "AI assistant, IDE, or automation process that invokes MCP tools over STDIO or HTTP.")
+Person_Ext(mcpClient, "MCP Client", "AI assistant, IDE, or automation process that invokes MCP tools.")
 
-System_Boundary(gwMcpServer, "Ghostwriter MCP Server") {
-    Component(mcpRuntime, "MCP Server Runtime and CLI", "Java / MCP", "McpServer entry point that initializes the server, registers tools and resources, and coordinates requests.")
-    Component(transportAdapters, "MCP Transport Adapters", "STDIO / HTTP", "Serve the registered MCP capabilities to local clients over STDIO or to remote clients over stateless or streamable HTTP.")
-    Component(runtimeConfiguration, "Runtime Configuration", "Java properties", "Loads the MCP configuration file and supplies server, project, transport, and generative-AI settings to the runtime and tools.")
-    Component(ghostwriterTools, "Ghostwriter Functional Tools", "Ghostwriter Java library", "Provides project-aware file, command, web, context, guidance, and reusable Act workflow operations, including AI-assisted processing.")
-    Component(bindexServices, "Bindex Core Tools and Resources", "Bindex Core Java library", "Retrieves, validates, and registers Bindex metadata, exposes its schema and generation prompt, and recommends libraries.")
-}
+' This module packages dependencies; src/main/java contains no local components.
+' Keep dependency internals out of scope rather than inventing a decomposition.
+Container(gwMcpServer, "Ghostwriter MCP Server", "Java 17 executable JAR", "Packages the Machai MCP runtime, Ghostwriter tools, and Bindex Core metadata and recommendation capabilities.")
 
-System_Ext(genAiProvider, "Configured Generative AI Provider", "External provider such as CodeMie selected by gw.model and genai.serverId configuration.")
+note bottom of gwMcpServer
+  No local Java components exist in src/main/java.
+  Entry point supplied by machai-mcp-server:
+  org.machanism.machai.mcp.server.McpServer
+  Configuration: mcp-server.properties; optional gw.properties.
+end note
+
+System_Ext(genAiProvider, "Configured Generative AI Provider", "Provider used by model-assisted Ghostwriter workflows, such as CodeMie.")
 System_Ext(packageRepos, "Maven / Library Metadata Sources", "External repositories and indexes used for dependency metadata and library recommendations.")
 System_Ext(bindexRegistry, "Bindex Registry", "External Bindex service that stores and serves registered metadata descriptors.")
 
-Rel(mcpClient, mcpRuntime, "Invokes MCP tools", "STDIO / HTTP")
-Rel(mcpRuntime, transportAdapters, "Starts configured transport", "Java API")
-Rel(transportAdapters, mcpClient, "Serves MCP requests and responses", "STDIO / HTTP")
-Rel(mcpRuntime, runtimeConfiguration, "Loads server and tool configuration", "Properties API")
-Rel(mcpRuntime, ghostwriterTools, "Registers and executes project assistance tools", "Java API")
-Rel(mcpRuntime, bindexServices, "Exposes metadata and recommendation tools", "Java API")
-Rel(runtimeConfiguration, ghostwriterTools, "Supplies provider and workflow settings", "Configuration API")
-Rel(runtimeConfiguration, bindexServices, "Supplies service settings", "Configuration API")
-Rel(ghostwriterTools, genAiProvider, "Requests code generation and analysis", "Provider API")
-Rel(bindexServices, packageRepos, "Looks up dependency metadata and recommendations", "Repository/index APIs")
-Rel(bindexServices, bindexRegistry, "Retrieves and registers Bindex descriptors", "Bindex API")
-Rel(ghostwriterTools, bindexServices, "Uses metadata to enrich recommendations", "Java API")
+Rel(mcpClient, gwMcpServer, "Invokes MCP tools and resources", "STDIO / HTTP")
+Rel(gwMcpServer, genAiProvider, "Requests model-assisted processing through Ghostwriter", "Provider API")
+Rel(gwMcpServer, packageRepos, "Looks up dependency metadata and recommendations through Bindex Core", "Repository/index APIs")
+Rel(gwMcpServer, bindexRegistry, "Retrieves and registers Bindex descriptors through Bindex Core", "Bindex API")
 
 SHOW_LEGEND()
 @enduml
