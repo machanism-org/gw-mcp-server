@@ -1,7 +1,7 @@
 {
 	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
 	"name": "ghostwriter-agent",
-	"version": "1.4.3-SNAPSHOT",
+	"version": "1.4.3",
 	"description": "Connects to the Ghostwriter MCP server for Act workflows, project files, REST APIs, and project context operations.",
 	"author": {
 		"name": "Viktor Tovstyi"

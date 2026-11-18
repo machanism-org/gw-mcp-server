@@ -69,7 +69,7 @@ Provider defaults below come from the shared GenAI Client documentation; server 
 | `--projectDir` / `-d` | Project directory supplied to project-aware server workflows. | Not set; HTTP mode can determine it from a client request. Set explicitly for predictable project context. |
 | `--config` / `-c` | Server properties configuration file loaded before startup. | `mcp.properties`; absence of the default is tolerated, but an explicitly selected file must be readable. |
 | `--name` / `-n` | Server name advertised by the MCP runtime. | This module supplies `mcp.server.name=gw-mcp-server` through Maven-filtered resources. |
-| `--version` / `-v` | Version advertised by the MCP runtime. | This module supplies its Maven project version through Maven-filtered resources (currently `1.4.3-SNAPSHOT`). |
+| `--version` / `-v` | Version advertised by the MCP runtime. | This module supplies its Maven project version through Maven-filtered resources (currently `1.4.3`). |
 | `--port` / `-p` | Selects HTTP server mode. | Not set: the server uses STDIO. |
 | `--session` / `-s` | Enables streamable HTTP sessions when HTTP mode is active. | Disabled. |
 | `maven.compiler.release` | Java release used to compile the artifact. | `17` |
