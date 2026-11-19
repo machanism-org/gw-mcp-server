@@ -8,17 +8,20 @@
 	<parent>
 		<groupId>org.machanism.machai</groupId>
 		<artifactId>machai</artifactId>
-		<version>1.4.3</version>
+		<version>1.4.4-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>gw-mcp-server</artifactId>
 	<name>Ghostwriter MCP Server</name>
 
+	<!-- @guidance: Summarize the `src/site/markdown/index.md` introduction
+	section and put this conten to the `description` tag.  -->
 	<description>
-		Ghostwriter MCP Server combines Ghostwriter and Bindex Core's metadata
-		retrieval,
-		registration, and library recommendation capabilities with Machai MCP
-		Server runtime to expose tools over STDIO or HTTP.
+		Ghostwriter MCP Server is an executable Java 17 Model Context Protocol
+		(MCP) server that combines Ghostwriter's project-aware code-assistance
+		workflows with Bindex Core's metadata retrieval, registration, and library
+		recommendation capabilities, exposed through the Machai MCP Server runtime
+		over STDIO or HTTP.
 	</description>
 
 	<profiles>
