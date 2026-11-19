@@ -57,7 +57,7 @@ Provider defaults below come from the shared GenAI Client documentation; server 
 | `ANTHROPIC_API_KEY` | Anthropic API key or authorization token. | No default; required for direct Anthropic access. |
 | `ANTHROPIC_BASE_URL` | Anthropic-compatible API endpoint override. | Anthropic SDK default. |
 | `GENAI_USERNAME` / `GENAI_PASSWORD` | CodeMie user/password or OAuth client ID/secret. | No credential defaults; required for CodeMie. |
-| `AUTH_URL` | CodeMie OpenID Connect token endpoint override. | CodeMie default endpoint. |
+| `AUTH_URL` | CodeMie OpenID Connect token endpoint override. | `https://auth.codemie.lab.epam.com/realms/codemie-prod/protocol/openid-connect/token` |
 | `GENAI_TIMEOUT` | Request timeout in seconds; zero leaves the SDK default in effect. | `0` |
 | `MAX_OUTPUT_TOKENS` | Maximum generated tokens. | `18000` |
 | `MAX_TOOL_CALLS` | OpenAI Responses API tool-call limit; zero leaves it unset. Does not limit Anthropic tool loops. | `0` |
