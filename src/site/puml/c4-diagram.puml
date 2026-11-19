@@ -17,25 +17,29 @@ title Ghostwriter MCP Server - Component Diagram
 
 Person_Ext(mcpClient, "MCP Client", "AI assistant, IDE, or automation process that invokes MCP tools.")
 
-' This module packages dependencies; src/main/java contains no local components.
-' Keep dependency internals out of scope rather than inventing a decomposition.
-Container(gwMcpServer, "Ghostwriter MCP Server", "Java 17 executable JAR", "Packages the Machai MCP runtime, Ghostwriter tools, and Bindex Core metadata and recommendation capabilities.")
-
-note bottom of gwMcpServer
-  No local Java components exist in src/main/java.
-  Entry point supplied by machai-mcp-server:
-  org.machanism.machai.mcp.server.McpServer
-  Configuration: mcp-server.properties; optional gw.properties.
-end note
+Container_Boundary(gwMcpServer, "Ghostwriter MCP Server", "Java 17 executable JAR") {
+  Component(mcpRuntime, "Machai MCP Server Runtime", "machai-mcp-server dependency", "Provides the MCP server entry point and exposes registered tools over STDIO or HTTP.")
+  Component(ghostwriterTools, "Ghostwriter Tools", "ghostwriter dependency", "Provides project-aware workflows, file and command operations, guidance processing, and model-assisted capabilities.")
+  Component(bindexCore, "Bindex Core Tools", "bindex-core dependency", "Provides Bindex metadata retrieval and registration, schema access, and library recommendations.")
+}
 
 System_Ext(genAiProvider, "Configured Generative AI Provider", "Provider used by model-assisted Ghostwriter workflows, such as CodeMie.")
 System_Ext(packageRepos, "Maven / Library Metadata Sources", "External repositories and indexes used for dependency metadata and library recommendations.")
 System_Ext(bindexRegistry, "Bindex Registry", "External Bindex service that stores and serves registered metadata descriptors.")
 
-Rel(mcpClient, gwMcpServer, "Invokes MCP tools and resources", "STDIO / HTTP")
-Rel(gwMcpServer, genAiProvider, "Requests model-assisted processing through Ghostwriter", "Provider API")
-Rel(gwMcpServer, packageRepos, "Looks up dependency metadata and recommendations through Bindex Core", "Repository/index APIs")
-Rel(gwMcpServer, bindexRegistry, "Retrieves and registers Bindex descriptors through Bindex Core", "Bindex API")
+Rel(mcpClient, mcpRuntime, "Invokes MCP tools and resources", "STDIO / HTTP")
+Rel(mcpRuntime, ghostwriterTools, "Dispatches tool requests to")
+Rel(mcpRuntime, bindexCore, "Dispatches tool requests to")
+Rel(ghostwriterTools, genAiProvider, "Requests model-assisted processing", "Provider API")
+Rel(bindexCore, packageRepos, "Looks up dependency metadata and recommendations", "Repository/index APIs")
+Rel(bindexCore, bindexRegistry, "Retrieves and registers Bindex descriptors", "Bindex API")
+
+note bottom of gwMcpServer
+  Component boundaries reflect the project's declared Maven dependencies;
+  this module has no local Java source components in src/main/java.
+  Entry point: org.machanism.machai.mcp.server.McpServer
+  Configuration: mcp-server.properties; optional gw.properties.
+end note
 
 SHOW_LEGEND()
 @enduml
