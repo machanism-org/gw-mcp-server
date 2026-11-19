@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/machanism-org/bindex-core/refs/heads/main/src/main/resources/schema/bindex-schema-v2.json",
-  "id": "org.machanism.machai:gw-mcp-server:1.4.2",
+  "id": "org.machanism.machai:gw-mcp-server:1.4.3",
   "name": "org.machanism.machai:gw-mcp-server",
-  "version": "1.4.2",
-  "description": "Ghostwriter MCP Server is an executable Java 17 Model Context Protocol (MCP) server that combines Ghostwriter project-aware code-assistance workflows with Bindex Core metadata retrieval, registration, semantic discovery, and library recommendation capabilities. It exposes these workflows through the Machai MCP Server runtime for MCP clients, IDE integrations, and developer-automation processes. The executable entry point is org.machanism.machai.mcp.server.McpServer. Launching without a port uses the STDIO transport; --port enables an HTTP server and --session enables streamable HTTP sessions. The server accepts a project directory, name, and advertised version, and its Ghostwriter model-assisted workflows use the configured generative-AI provider and model. The Maven artifact depends on Ghostwriter, Bindex Core, and Machai MCP Server and is packaged as a runnable JAR.",
+  "version": "1.4.3",
+  "description": "Ghostwriter MCP Server is an executable Java 17 Model Context Protocol server that exposes Ghostwriter project-aware code assistance and Bindex Core metadata retrieval, registration, semantic discovery, and library recommendation workflows to MCP clients. The Maven artifact org.machanism.machai:gw-mcp-server is packaged as a runnable JAR whose entry point is org.machanism.machai.mcp.server.McpServer. It supports STDIO by default, HTTP with --port, and streamable HTTP sessions with --session. The server accepts runtime configuration for project directory, advertised server name and version, and properties files. Ghostwriter model-assisted workflows can use the Machai GenAI Client provider layer, including OpenAI, Anthropic, and CodeMie, while local Tools and None providers support tool callbacks or no-op operation. Provider credentials and model selection are configured externally; this module's bundled properties specify Maven-filtered server name and version and gw.properties as the additional configuration file. The project depends on Ghostwriter, Bindex Core, and Machai MCP Server at the project version and targets Java 17.",
   "authors": [
     {
       "name": "Viktor Tovstyi",
@@ -20,7 +20,8 @@
       "Developer automation",
       "Project-aware code assistance",
       "Library metadata retrieval and registration",
-      "Semantic library discovery and recommendation"
+      "Semantic library discovery and recommendation",
+      "Generative AI provider integration"
     ],
     "languages": [
       {
@@ -35,28 +36,31 @@
     "usageContext": [
       "Local STDIO MCP client integration",
       "Remote HTTP MCP client integration",
+      "Streamable HTTP MCP sessions",
       "AI-assisted development workflows",
       "Maven-based Java projects",
-      "Bindex metadata discovery and registration"
+      "Bindex metadata discovery and registration",
+      "Standalone runnable Java application"
     ],
     "targetEnvironment": [
       "Java"
     ],
     "integrations": [
       "Model Context Protocol clients",
-      "CodeMie",
-      "Maven Central"
+      "OpenAI",
+      "Anthropic",
+      "CodeMie"
     ]
   },
   "constructors": [
     {
       "package": "org.machanism.machai.mcp.server",
       "signature": "public org.machanism.machai.mcp.server.McpServer()",
-      "description": "Creates the MCP server entry-point object. Operational startup is normally performed through the static main method in the assembled executable JAR.",
+      "description": "Creates the MCP server entry-point object. Operational startup is normally performed through the static main method in the assembled executable JAR, which initializes the server runtime and selected transport.",
       "examples": [
         {
           "snippet": "org.machanism.machai.mcp.server.McpServer server = new org.machanism.machai.mcp.server.McpServer();",
-          "description": "Creates the documented entry-point object. For an MCP deployment, launch the executable JAR so the runtime manages the selected transport."
+          "description": "Creates the entry-point object. For normal MCP deployment, run the assembled JAR so the runtime initializes and manages the chosen transport."
         }
       ]
     }
@@ -66,14 +70,14 @@
       "package": "org.machanism.machai.mcp.server",
       "name": "main",
       "signature": "public static void main(java.lang.String[] args) throws java.lang.Exception",
-      "description": "Starts the unified Ghostwriter and Bindex MCP tool server. No port option selects STDIO transport; -p or --port starts HTTP mode; -s or --session enables streamable HTTP mode.",
+      "description": "Starts the unified Ghostwriter and Bindex MCP tool server. With no port option, the server uses STDIO; -p or --port selects HTTP mode; -s or --session enables streamable HTTP sessions.",
       "examples": [
         {
-          "snippet": "java -jar target/gw-mcp-server-1.4.2.jar --projectDir . --name ghostwriter-local",
-          "description": "Starts a named server in STDIO mode for a local MCP client and supplies the current project directory to project-aware workflows."
+          "snippet": "java -jar target/gw-mcp-server-1.4.3.jar --projectDir . --name ghostwriter-local",
+          "description": "Starts a named server in STDIO mode for a local MCP client and supplies the current directory as the project context."
         },
         {
-          "snippet": "java -jar target/gw-mcp-server-1.4.2.jar --projectDir . --port 45000 --session",
+          "snippet": "java -jar target/gw-mcp-server-1.4.3.jar --projectDir . --port 45000 --session",
           "description": "Starts a streamable HTTP MCP server on port 45000 for an HTTP-capable MCP client."
         }
       ]
@@ -86,32 +90,43 @@
       "examples": [
         {
           "snippet": "org.machanism.macha.core.commons.configurator.PropertiesConfigurator configurator = org.machanism.machai.mcp.server.McpServer.getConfigurator(\"gw.properties\");",
-          "description": "Loads an explicitly named server properties file before startup. The file must contain valid runtime and AI-provider settings."
+          "description": "Loads an explicitly named server properties file before startup. Keep provider credentials in a protected configuration file or environment settings rather than source control."
         }
       ]
     }
   ],
   "customizations": [
     {
-      "name": "MCP command-line transport options",
+      "name": "MCP command-line transport and server options",
       "package": "org.machanism.machai.mcp.server",
-      "description": "Use -p or --port to select HTTP mode, -s or --session to enable streamable HTTP mode, -d or --projectDir for the project path, -n or --name for the server name, -v or --version for the advertised version, and -h or --help for usage information. Without a port, the server uses STDIO.",
+      "description": "Use -p or --port to select HTTP mode, -s or --session to enable streamable HTTP, -d or --projectDir to provide a project path, -n or --name to set the advertised server name, -v or --version to set the advertised version, -c or --config to select a properties file, and -h or --help for usage information. Without a port, the server uses STDIO.",
       "type": "command-line options",
       "examples": [
         {
-          "snippet": "java -jar target/gw-mcp-server-1.4.2.jar -d . -n ghostwriter -p 45000 -s",
-          "description": "Configures a project directory and server name, then starts streamable HTTP mode on port 45000."
+          "snippet": "java -jar target/gw-mcp-server-1.4.3.jar -d . -n ghostwriter -p 45000 -s",
+          "description": "Supplies the project directory and server name, then starts streamable HTTP mode on port 45000."
         }
       ]
     },
     {
-      "name": "Ghostwriter AI model configuration",
-      "description": "The effective Maven build configures gw.model as CodeMie:gpt-5.6-luna-2026-07-09. Configure provider credentials and connection settings outside source control through the Ghostwriter or Machai runtime configuration.",
+      "name": "Ghostwriter AI provider and model configuration",
+      "description": "Configure provider selection with the provider-qualified gw.model property, for example OpenAI:gpt-4o-mini or Anthropic:MODEL, and provide the matching provider credentials via secure runtime configuration or environment. OpenAI uses OPENAI_API_KEY and may use OPENAI_BASE_URL; Anthropic uses ANTHROPIC_API_KEY and may use ANTHROPIC_BASE_URL; CodeMie uses GENAI_USERNAME and GENAI_PASSWORD with optional AUTH_URL. The module does not declare a default AI model in its bundled server properties.",
       "type": "configuration property",
       "examples": [
         {
-          "snippet": "gw.model=CodeMie:gpt-5.6-luna-2026-07-09",
-          "description": "Sets the provider-qualified model identifier used by Ghostwriter model-assisted workflows."
+          "snippet": "gw.model=OpenAI:gpt-4o-mini",
+          "description": "Selects an OpenAI model for Ghostwriter requests; configure OPENAI_API_KEY outside source control and confirm the model is available to the account."
+        }
+      ]
+    },
+    {
+      "name": "Additional server configuration file",
+      "description": "The bundled mcp-server.properties selects gw.properties as custom_configuration. Use the runtime config option to load server properties and keep secrets outside committed project files.",
+      "type": "configuration file",
+      "examples": [
+        {
+          "snippet": "java -jar target/gw-mcp-server-1.4.3.jar --config gw.properties",
+          "description": "Starts the server with an explicitly selected properties file, which must be readable."
         }
       ]
     }
@@ -121,41 +136,40 @@
       "name": "Build, configure, and launch a local STDIO MCP server",
       "steps": [
         "Install Java 17 and Maven.",
-        "From the project root, build the runnable artifact with mvn clean install -Ppack.",
-        "Configure the CodeMie credentials and required runtime connection settings outside source control. Set gw.model=CodeMie:gpt-5.6-luna-2026-07-09 if an explicit model selection is needed.",
-        "Configure an MCP client to start java -jar target/gw-mcp-server-1.4.2.jar --projectDir ..",
-        "Start the MCP client. With no port argument, it communicates with the server over standard input and output.",
-        "Use the discovered Ghostwriter project workflows or Bindex metadata workflows for the selected project."
+        "From the project root, build and install the runnable artifact with mvn clean install -Ppack.",
+        "Create a protected gw.properties file to select a provider using gw.model=OpenAI:gpt-4o-mini, and configure the required OPENAI_API_KEY as an environment variable; do not commit credentials.",
+        "Configure an MCP client to launch java -jar target/gw-mcp-server-1.4.3.jar --projectDir . --config gw.properties.",
+        "Start the MCP client; without a port option, the server communicates over standard input and output.",
+        "Use the client's discovered Ghostwriter project workflows or Bindex metadata workflows for the selected project."
       ],
-      "description": "This local-process scenario lets an IDE or AI assistant manage Ghostwriter MCP Server through the STDIO transport."
+      "description": "A practical local-process setup for an IDE or AI assistant using STDIO transport and a configured generative-AI provider."
     },
     {
       "name": "Run a streamable HTTP MCP server",
       "steps": [
-        "Build the project with mvn clean install -Ppack.",
-        "Prepare the AI-provider runtime configuration when model-assisted workflows are required.",
-        "Start the server with java -jar target/gw-mcp-server-1.4.2.jar --projectDir . --port 45000 --session.",
-        "Configure an HTTP-capable MCP client to connect to the host and port where the server is running.",
+        "Build the runnable release artifact with mvn clean install -Ppack.",
+        "Prepare a protected properties file and provider credentials if model-assisted workflows are required.",
+        "Start the server with java -jar target/gw-mcp-server-1.4.3.jar --projectDir . --config gw.properties --port 45000 --session.",
+        "Configure an HTTP-capable MCP client to connect to the host and port where the server is listening.",
         "Connect the client and invoke the advertised Ghostwriter or Bindex tools for the target project."
       ],
-      "description": "This scenario exposes the same MCP capabilities through HTTP and enables streamable sessions."
+      "description": "Deploys the MCP server over HTTP with streamable sessions enabled."
     },
     {
       "name": "Declare the server artifact in a Maven application",
-      "configuration": "<dependency><groupId>org.machanism.machai</groupId><artifactId>gw-mcp-server</artifactId><version>1.4.2</version></dependency>",
+      "configuration": "<dependency><groupId>org.machanism.machai</groupId><artifactId>gw-mcp-server</artifactId><version>1.4.3</version></dependency>",
       "steps": [
-        "Add the displayed dependency to the application's pom.xml.",
+        "Add the dependency configuration to the application's pom.xml.",
         "Resolve the artifact from Maven Central or make it available in the local Maven repository.",
-        "When embedding is intentional, invoke org.machanism.machai.mcp.server.McpServer.main from the hosting application; otherwise prefer the standalone JAR for process isolation."
+        "When embedding is intentional, invoke org.machanism.machai.mcp.server.McpServer.main from the hosting application; otherwise use the standalone runnable JAR for process isolation."
       ],
-      "description": "This dependency declaration supports applications that intentionally embed the server entry point."
+      "description": "Shows installation through Maven for applications that intentionally embed the server entry point."
     }
   ],
   "dependencies": [
-    "org.machanism.machai:ghostwriter:1.4.2",
-    "org.machanism.machai:bindex-core:1.4.2",
-    "org.machanism.machai:machai-mcp-server:1.4.2",
-    "org.slf4j:slf4j-api:2.0.17"
+    "org.machanism.machai:ghostwriter:1.4.3",
+    "org.machanism.machai:bindex-core:1.4.3",
+    "org.machanism.machai:machai-mcp-server:1.4.3"
   ],
   "location": {
     "repositoryType": "Maven",
@@ -163,7 +177,7 @@
     "coordinates": {
       "group": "org.machanism.machai",
       "artifactId": "gw-mcp-server",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "extension": "jar"
     }
   }
